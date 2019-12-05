@@ -316,6 +316,7 @@ locale-gen
 🔘 Set locale
 ```
 echo LANG=en_US.UTF-8 >> /etc/locale.conf
+echo LC_COLLATE=C >> /etc/locale.conf
 export LANG=en_US.UTF-8
 ```
 ⌨️ Set tty keymap
