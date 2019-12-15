@@ -16,9 +16,10 @@
   </p>
 </div>
 
-> This tutorial is inspired by <https://sourceforge.net/projects/ezos/files/ArchStuff/>
-
 ## Index
+- [0. Introduction](#0-introduction)
+  - [Why this guide?](#why-this-guide)
+  - [Important other resources](#important-other-resources)
 - [1. Live Setup](#1-live-setup)
     - [Set keyboard layout](#set-keyboard-layout)
     - [If WiFi install](#if-wifi-install)
@@ -45,7 +46,7 @@
 - [6. Setup time/date and languages](#6-setup-timedate-and-languages)
   - [Setup hostname](#setup-hostname)
   - [Setup locale](#setup-locale)
-  - [Setup time & date](#setup-time--date)
+  - [Setup time &amp; date](#setup-time-amp-date)
   - [Setup multilib](#setup-multilib)
 - [7. Setup users](#7-setup-users)
   - [Setup users](#setup-users)
@@ -108,11 +109,35 @@
 - [13. Some fixes and tweaks](#13-some-fixes-and-tweaks)
   - [Compability tweaks](#compability-tweaks)
     - [Spotify local files](#spotify-local-files)
-  - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-%22failed-to-start-user-manager-service-for-user-174%22-sddm)
+  - [Fix on shutdown &quot;Failed to start user manager service for user 174&quot; (sddm)](#fix-on-shutdown-quotfailed-to-start-user-manager-service-for-user-174quot-sddm)
   - [Force Google Emoji](#force-google-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
 
+# 0. Introduction
+
+## Why this guide?
+The Arch Wiki has these informations spread across multiple pages and I think this is much more clearly layed out and straight forward.
+It also contains some packages and decisions that are personal preference.
+
+## Important other resources
+
+The Arch Wiki is a very powerful resource. If you have any problems it's the first place to search for solutions 
+<https://wiki.archlinux.org>
+
+Especially for the installation please read  
+<https://wiki.archlinux.org/index.php/installation_guide>
+
+Sometimes packages need manual intervention which is announced at  
+<https://www.archlinux.org/news/>  
+So keep an eye on it or ideally subscribe to the mailing list at  
+<https://lists.archlinux.org/listinfo/arch-announce>
+
+This tutorial is inspired by <https://sourceforge.net/projects/ezos/files/ArchStuff/> and have taken out some stuff of it
+
 # 1. Live Setup
+
+At this point, I assume you're already in the archiso.
+
 ### Set keyboard layout
 ⌨️ The default keymap is US. Available layouts can be listed with:
 ```
