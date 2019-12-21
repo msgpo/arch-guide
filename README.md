@@ -121,7 +121,7 @@ It also contains some packages and decisions that are personal preference.
 
 ## Important other resources
 
-The Arch Wiki is a very powerful resource. If you have any problems it's the first place to search for solutions 
+The Arch Wiki is a very powerful resource. If you have any problems it's the first place to search for solutions  
 <https://wiki.archlinux.org>
 
 Especially for the installation please read  
@@ -297,8 +297,8 @@ arch-chroot /mnt
 # 5. Install Bootloader
 ▶️ UEFI:
 ```
-pacman -S grub os-prober efibootmgr dosfstools mtools fatresize
-grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+pacman -S grub os-prober efibootmgr dosfstools mtools gptfdisk fatresize
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot/EFI --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -400,6 +400,11 @@ Uncomment ```%wheel ALL=(ALL) ALL```
 pacman -S linux-headers linux-lts-headers dkms
 pacman -S jshon expac git wget acpid avahi xdotool pacman-contrib net-tools
 systemctl enable acpid avahi-daemon systemd-timesyncd
+```
+
+If system is running on a SSD
+```
+systemctl enable --now fstrim.timer
 ```
 
 ## Printer support
@@ -508,7 +513,7 @@ pacman -S nvidia lib32-nvidia-utils
 ```
 ### AMD Utils:
 ```
-pacman -S vulkan-radeon lib32-vulkan-radeon
+pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 ```
 
 ## Networking
