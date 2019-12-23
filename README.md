@@ -1,5 +1,5 @@
 <div align="center">
-  <p>
+  <div>
     <h1>
       <a href="#readme">
         <img src="https://www.archlinux.org/static/logos/archlinux-logo-dark-1200dpi.b42bd35d5916.png" alt="Arch Logo" />
@@ -8,12 +8,14 @@
       Arch Linux
     </h1>
     <h2>Installation instructions</h2>
-  </p>
-  <p>
+  </div>
+  <div>
     <a href="https://github.com/D3S0X/arch-installation/">
-      <img src="https://img.shields.io/github/last-commit/D3S0X/arch-installation.svg?style=for-the-badge&label=Last%20update" alt="Last Commit" />
+      <img src="https://img.shields.io/github/last-commit/D3S0X/arch-installation.svg?style=for-the-badge&label=Last%20update" alt="Last Update" />
+      <img src="https://img.shields.io/github/stars/D3S0X/arch-installation?style=for-the-badge" alt="Stars">
+      <img src="https://img.shields.io/github/license/D3S0X/arch-installation?style=for-the-badge">
     </a>
-  </p>
+  </div>
 </div>
 
 ## Index
