@@ -1,1 +1,3 @@
-remote_theme: "dracula/gh-pages"
+theme: jekyll-theme-cayman
+title: arch-installation
+description: My installation instructions for arch linux
