@@ -70,7 +70,7 @@
     - [SDDM (Included in KDE Plasma)](#sddm-included-in-kde-plasma)
     - [GDM (Included with GNOME)](#gdm-included-with-gnome)
     - [LightDM](#lightdm)
-- [10. Useful packages](#10-useful-packages)
+- [9. Useful packages](#9-useful-packages)
   - [General packages](#general-packages)
   - [Printer support](#printer-support)
     - [General packages:](#general-packages)
@@ -88,8 +88,8 @@
   - [Other shells](#other-shells)
     - [zsh (Z Shell)](#zsh-z-shell)
     - [fish (Friendly interactive shell)](#fish-friendly-interactive-shell)
-- [11. Reboot](#11-reboot)
-- [12. Post installation](#12-post-installation)
+- [10. Reboot](#10-reboot)
+- [11. Post installation](#11-post-installation)
   - [Set X11 Keymap](#set-x11-keymap)
   - [WiFi](#wifi)
   - [Oh My Zsh](#oh-my-zsh)
@@ -109,7 +109,7 @@
     - [macOS Fonts](#macos-fonts)
   - [Nano syntax highlighting](#nano-syntax-highlighting)
   - [Auto clean package cache](#auto-clean-package-cache)
-- [13. Some fixes and tweaks](#13-some-fixes-and-tweaks)
+- [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
   - [Compability tweaks](#compability-tweaks)
     - [Spotify local files](#spotify-local-files)
   - [Fix on shutdown &quot;Failed to start user manager service for user 174&quot; (sddm)](#fix-on-shutdown-quotfailed-to-start-user-manager-service-for-user-174quot-sddm)
@@ -478,7 +478,7 @@ pacman -S lightdm lightdm-gtk-greeter
 systemctl enable lightdm
 ```
 
-# 10. Useful packages
+# 9. Useful packages
 
 ## General packages
 ```
@@ -583,14 +583,14 @@ pacman -S fish
 chsh -s /usr/bin/fish yourusername
 ```
 
-# 11. Reboot
+# 10. Reboot
 ```
 exit
 umount -R /mnt
 telinit 6
 ```
 
-# 12. Post installation
+# 11. Post installation
 
 ## Set X11 Keymap
 ⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this
@@ -718,7 +718,7 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk 1
 ```
 
-# 13. Some fixes and tweaks
+# 12. Some fixes and tweaks
 
 ## Compability tweaks
 🐛 This will fix some bugs and compability issues
