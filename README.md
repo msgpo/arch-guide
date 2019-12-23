@@ -53,13 +53,9 @@
     - [Set root password](#set-root-password)
     - [Add your user](#add-your-user)
     - [Enable sudo](#enable-sudo)
-- [8. Install some useful packages](#8-install-some-useful-packages)
-  - [General packages](#general-packages)
-  - [Printer support](#printer-support)
-    - [General packages:](#general-packages)
-    - [UI for HP Printers:](#ui-for-hp-printers)
-  - [Display Server:](#display-server)
-- [9. Install Desktop Environment](#9-install-desktop-environment)
+- [8. Install Desktop](#8-install-desktop)
+  - [Display Server](#display-server)
+  - [Desktop Environment](#desktop-environment)
     - [LXDE:](#lxde)
     - [LXQt:](#lxqt)
     - [GNOME:](#gnome)
@@ -69,12 +65,18 @@
     - [Budgie:](#budgie)
     - [Mate:](#mate)
     - [Deepin:](#deepin)
-- [10. Install and enable Desktop Manager and some other useful stuff](#10-install-and-enable-desktop-manager-and-some-other-useful-stuff)
-  - [Display Manager](#display-manager)
+  - [Display Manager (Desktop Manager)](#display-manager-desktop-manager)
     - [LXDM (Included in LXDE)](#lxdm-included-in-lxde)
     - [SDDM (Included in KDE Plasma)](#sddm-included-in-kde-plasma)
     - [GDM (Included with GNOME)](#gdm-included-with-gnome)
     - [LightDM](#lightdm)
+- [10. Useful packages](#10-useful-packages)
+  - [General packages](#general-packages)
+  - [Printer support](#printer-support)
+    - [General packages:](#general-packages)
+    - [GTK Scan Application:](#gtk-scan-application)
+    - [Qt Scan Application:](#qt-scan-application)
+    - [UI for HP Printers:](#ui-for-hp-printers)
   - [Graphics Driver](#graphics-driver)
     - [Open Source drivers:](#open-source-drivers)
     - [Nvidia proprietary driver:](#nvidia-proprietary-driver)
@@ -90,7 +92,8 @@
 - [12. Post installation](#12-post-installation)
   - [Set X11 Keymap](#set-x11-keymap)
   - [WiFi](#wifi)
-  - [Oh my zsh](#oh-my-zsh)
+  - [Oh My Zsh](#oh-my-zsh)
+  - [Oh my Fish](#oh-my-fish)
   - [AUR Setup](#aur-setup)
   - [If not all user dir's are present](#if-not-all-user-dirs-are-present)
   - [If you want a graphical package manager](#if-you-want-a-graphical-package-manager)
@@ -393,44 +396,20 @@ EDITOR=nano visudo
 ```
 Uncomment ```%wheel ALL=(ALL) ALL```
 
-# 8. Install some useful packages
+# 8. Install Desktop
 
-## General packages
-```
-pacman -S linux-headers linux-lts-headers dkms
-pacman -S jshon expac git wget acpid avahi xdotool pacman-contrib net-tools
-systemctl enable acpid avahi-daemon systemd-timesyncd
-```
-
-If system is running on a SSD
-```
-systemctl enable --now fstrim.timer
-```
-
-## Printer support
-🖨️ Add some packages needed for printing
-### General packages:
-```
-pacman -S system-config-printer foomatic-db foomatic-db-engine gutenprint gsfonts cups cups-pdf cups-filters sane simple-scan
-systemctl enable org.cups.cupsd.service saned.socket
-```
-### UI for HP Printers:
-```
-pacman -S hplip
-```
-
-## Display Server:
+## Display Server
 🖥️ Xorg is the display server we will use
 ```
 pacman -S xorg-server xorg-xinit xorg-xrandr xorg-xfontsel xorg-xkill
 ```
 
-# 9. Install Desktop Environment
+## Desktop Environment
 
 🗔 You need to select a desktop environment
 
 - For beginners coming from Windows I recommend KDE Plasma.
-- For a very resource friendy desktop I recommend Xfce
+- For a very resource friendy desktop I recommend Xfce or LXQt
 - The instructions for KDE Plasma are tested by me because I use it. Others should work but you may need some extra packages for productive use
 
 ### LXDE:
@@ -472,9 +451,7 @@ nano /etc/lightdm/lightdm.conf
 greeter-session=lightdm-deepin-greeter
 ```
 
-# 10.  Install and enable Desktop Manager and some other useful stuff
-
-## Display Manager
+## Display Manager (Desktop Manager)
 🖥️ A display manager is basically your login screen where you enter your user details and select your Desktop Environment
 
 ### LXDM (Included in LXDE)
@@ -499,6 +476,40 @@ systemctl enable gdm
 ```
 pacman -S lightdm lightdm-gtk-greeter
 systemctl enable lightdm
+```
+
+# 10. Useful packages
+
+## General packages
+```
+pacman -S linux-headers linux-lts-headers dkms
+pacman -S jshon expac git wget acpid avahi net-tools
+systemctl enable acpid avahi-daemon systemd-timesyncd
+```
+
+If system is running on a SSD
+```
+systemctl enable --now fstrim.timer
+```
+
+## Printer support
+🖨️ Add some packages needed for printing
+### General packages:
+```
+pacman -S system-config-printer foomatic-db foomatic-db-engine gutenprint gsfonts cups cups-pdf cups-filters sane
+systemctl enable org.cups.cupsd.service saned.socket
+```
+### GTK Scan Application:
+```
+pacman -S simple-scan
+```
+### Qt Scan Application:
+```
+pacman -S skanlite
+```
+### UI for HP Printers:
+```
+pacman -S hplip
 ```
 
 ## Graphics Driver
@@ -562,7 +573,7 @@ Comment out ```# load-module module-role-cork```
 
 ### zsh (Z Shell)
 ```
-pacman -S zsh zsh-completions zsh-syntax-highlighting
+pacman -S zsh zsh-completions
 chsh -s /usr/bin/zsh yourusername
 ```
 
@@ -582,7 +593,7 @@ telinit 6
 # 12. Post installation
 
 ## Set X11 Keymap
-⌨️ It is recommended to set this to your keymap. Some Display Managers and Desktops use this
+⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this
 ```
 localectl set-x11-keymap de
 ```
@@ -590,10 +601,16 @@ localectl set-x11-keymap de
 ## WiFi
 📶 You may use the ```nmtui``` to configure your network profile
 
-## Oh my zsh
-🤖 A handy framework for managing your zsh configuration
+## Oh My Zsh
+🤖 A delightful & open source framework for Zsh
 ```
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+## Oh my Fish
+🤖 The Fishshell Framework
+```
+curl -L https://get.oh-my.fish | fish
 ```
 
 ## AUR Setup
@@ -601,7 +618,7 @@ The Arch User Repository is a community-driven repository for Arch users. ```yay
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -si
+makepkg -rsi
 cd .. && rm -r yay
 ```
 
@@ -664,7 +681,7 @@ yay -S nerd-fonts-complete
 ```
 git clone https://aur.archlinux.org/ttf-ms-win10.git
 cd ttf-ms-win10
-READ PKGBUILD and copy all windows files into the directory and run makepkg -si
+READ PKGBUILD and copy all windows files into the directory and run makepkg -rsi
 ```
 
 ### macOS Fonts
