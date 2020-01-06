@@ -492,7 +492,7 @@ systemctl enable --now fstrim.timer
 ```
 
 ## Printer support
-🖨️ Add some packages needed for printing
+🖨️ Add some packages needed for printing and scanning
 ### General packages:
 ```
 pacman -S system-config-printer foomatic-db foomatic-db-engine gutenprint gsfonts cups cups-pdf cups-filters sane
@@ -529,14 +529,13 @@ pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-d
 ## Networking
 🖧 This are essential networking tools
 ```
-pacman -S networkmanager networkmanager-openvpn networkmanager-pptp dnsmasq
-systemctl enable NetworkManager dnsmasq
+pacman -S networkmanager networkmanager-openvpn networkmanager-pptp
+systemctl enable NetworkManager
 ```
 ### If you use WiFi:
 📶 This are essential tools if you connect to the internet via WiFi
 ```
-pacman -S wireless_tools wpa_supplicant ifplugd dialog
-systemctl enable net-auto-wireless
+pacman -S wireless_tools wpa_supplicant ifplugd
 ```
 
 ## Some archive and file system utils
