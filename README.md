@@ -530,7 +530,7 @@ pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-d
 🖧 This are essential networking tools
 ```
 pacman -S networkmanager networkmanager-openvpn networkmanager-pptp dnsmasq
-systemctl enable NetworkManager
+systemctl enable NetworkManager dnsmasq
 ```
 ### If you use WiFi:
 📶 This are essential tools if you connect to the internet via WiFi
