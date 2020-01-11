@@ -109,7 +109,7 @@
   - [Nano syntax highlighting](#nano-syntax-highlighting)
   - [Auto clean package cache](#auto-clean-package-cache)
 - [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
-  - [Compability tweaks](#compability-tweaks)
+  - [Compatibility tweaks](#compatibility-tweaks)
     - [Spotify local files](#spotify-local-files)
   - [Fix on shutdown &quot;Failed to start user manager service for user 174&quot; (sddm)](#fix-on-shutdown-quotfailed-to-start-user-manager-service-for-user-174quot-sddm)
   - [Force Google Emoji](#force-google-emoji)
@@ -718,8 +718,8 @@ Exec = /usr/bin/paccache -rk 1
 
 # 12. Some fixes and tweaks
 
-## Compability tweaks
-🐛 This will fix some bugs and compability issues
+## Compatibility tweaks
+🐛 This will fix some bugs and compatibility issues
 ```
 sudo ln -sf /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.5
 ```
