@@ -45,7 +45,7 @@
 - [6. Setup time/date and languages](#6-setup-timedate-and-languages)
   - [Setup hostname](#setup-hostname)
   - [Setup locale](#setup-locale)
-  - [Setup time &amp; date](#setup-time-amp-date)
+  - [Setup time & date](#setup-time--date)
   - [Setup multilib](#setup-multilib)
 - [7. Setup users](#7-setup-users)
   - [Setup users](#setup-users)
@@ -72,7 +72,7 @@
 - [9. Useful packages](#9-useful-packages)
   - [General packages](#general-packages)
   - [Printer support](#printer-support)
-    - [General packages:](#general-packages)
+    - [General packages:](#general-packages-1)
     - [GTK Scan Application:](#gtk-scan-application)
     - [Qt Scan Application:](#qt-scan-application)
     - [UI for HP Printers:](#ui-for-hp-printers)
@@ -111,7 +111,7 @@
 - [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
   - [Compatibility tweaks](#compatibility-tweaks)
     - [Spotify local files](#spotify-local-files)
-  - [Fix on shutdown &quot;Failed to start user manager service for user 174&quot; (sddm)](#fix-on-shutdown-quotfailed-to-start-user-manager-service-for-user-174quot-sddm)
+  - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-%22failed-to-start-user-manager-service-for-user-174%22-sddm)
   - [Force Google Emoji](#force-google-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
 
@@ -381,7 +381,7 @@ passwd
 ### Add your user
 🧑 This will be your user you use to log in
 ```
-useradd -m -G users,wheel,audio,video,storage,power,input,optical,sys,log,network,floppy,scanner,rfkill,lp,adm -s /bin/bash yourusername
+useradd -m -g users -G wheel,audio,video,storage,power,input,optical,sys,log,network,floppy,scanner,rfkill,lp,adm -s /bin/bash yourusername
 passwd yourusername
 ```
 If you want to force your user to change password after first login:
@@ -429,7 +429,7 @@ pacman -S cinnamon nemo-fileroller
 ```
 ### KDE Plasma:
 ```
-pacman -S plasma plasma-wayland-session konsole dolphin gwenview ark kate okular
+pacman -S plasma konsole dolphin gwenview ark kate okular
 ```
 ### Xfce:
 ```
@@ -713,7 +713,7 @@ Target = *
 [Action]
 Description = Cleaning pacman cache...
 When = PostTransaction
-Exec = /usr/bin/paccache -rk 1
+Exec = /usr/bin/paccache -rk 2
 ```
 
 # 12. Some fixes and tweaks
