@@ -737,22 +737,30 @@ sudo chage --expiredate -1 sddm
 ```
 
 ## Force Google Emoji
+If the default font includes some emoji characters, they will be used over the characters provided by a dedicated emoji font, resulting in inconsistent display. To override this behavior, the following fontconfig snippet can be added
+
+(Source: <https://wiki.archlinux.org/index.php/Fonts#Force_color_emoji>)
 ```
-sudo nano /etc/fonts/conf.d/50-user.conf
+sudo nano /etc/fonts/conf.d/90-emoji.conf
 ```
 ```xml
 <fontconfig>
-  <match target="pattern">
-    <edit name="family" mode="prepend_first">
-      <string>Icons</string>
-    </edit>
-  </match>
-    
-  <match target="pattern">
-    <edit name="family" mode="prepend_first">
-      <string>Noto Color Emoji</string>
-    </edit>
-  </match>
+    <match>
+        <test name="family">
+            <string>sans-serif</string>
+        </test>
+        <edit mode="prepend" name="family" binding="strong">
+            <string>Noto Color Emoji</string>
+        </edit>
+    </match>
+    <match>
+        <test name="family">
+            <string>serif</string>
+        </test>
+        <edit mode="prepend" name="family" binding="strong">
+            <string>Noto Color Emoji</string>
+        </edit>
+    </match>
 </fontconfig>
 ```
 
