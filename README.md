@@ -77,8 +77,8 @@
     - [Qt Scan Application:](#qt-scan-application)
     - [UI for HP Printers:](#ui-for-hp-printers)
   - [Graphics Driver](#graphics-driver)
-    - [Mesa (required for all GPUs):](#mesa-required-for-all-gpus)
-    - [Vulkan (required for all GPUs):](#vulkan-required-for-all-gpus)
+    - [Mesa:](#mesa)
+    - [Vulkan:](#vulkan)
     - [Open Source drivers (AMD, Intel):](#open-source-drivers-amd-intel)
     - [Nvidia proprietary driver:](#nvidia-proprietary-driver)
     - [AMD Utils:](#amd-utils)
@@ -521,27 +521,33 @@ pacman -S hplip
 
 ## Graphics Driver
 
-### Mesa (required for all GPUs):
+### Mesa:
+This is required for all GPUs
 ```
 pacman -S mesa lib32-mesa
 ```
-### Vulkan (required for all GPUs):
+### Vulkan:
+This is required for all GPUs
 ```
 pacman -S vulkan-icd-loader lib32-vulkan-icd-loader
 ```
 ### Open Source drivers (AMD, Intel):
+Only install this group if you use an AMD or Intel GPU or want to use the open source NVIDIA driver (Nouveau)
 ```
 pacman -S xorg-drivers
 ```
 ### Nvidia proprietary driver:
+Only install these packages if you are using an NVIDIA GPU
 ```
-pacman -S nvidia lib32-nvidia-utils
+pacman -S nvidia nvidia-utils lib32-nvidia-utils
 ```
 ### AMD Utils:
+Only install these packages if you are using an AMD GPU
 ```
 pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk
 ```
 ### Intel Utils:
+Only install this package if you are using an Intel GPU
 ```
 pacman -S vulkan-intel
 ```
