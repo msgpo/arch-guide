@@ -77,9 +77,12 @@
     - [Qt Scan Application:](#qt-scan-application)
     - [UI for HP Printers:](#ui-for-hp-printers)
   - [Graphics Driver](#graphics-driver)
-    - [Open Source drivers:](#open-source-drivers)
+    - [Mesa (required for all GPUs):](#mesa-required-for-all-gpus)
+    - [Vulkan (required for all GPUs):](#vulkan-required-for-all-gpus)
+    - [Open Source drivers (AMD, Intel):](#open-source-drivers-amd-intel)
     - [Nvidia proprietary driver:](#nvidia-proprietary-driver)
     - [AMD Utils:](#amd-utils)
+    - [Intel Utils:](#intel-utils)
   - [Networking](#networking)
     - [If you use WiFi:](#if-you-use-wifi)
   - [Some archive and file system utils](#some-archive-and-file-system-utils)
@@ -114,6 +117,11 @@
   - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-%22failed-to-start-user-manager-service-for-user-174%22-sddm)
   - [Force Google Emoji](#force-google-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
+  - [Backup / Restore](#backup--restore)
+  - [System](#system)
+  - [Packages / Services List](#packages--services-list)
+    - [Backup](#backup)
+    - [Restore](#restore)
 
 # 0. Introduction
 
@@ -363,7 +371,7 @@ hwclock --systohc --utc
 ```
 nano /etc/pacman.conf
 ```
-Uncomment multilib (🍬 and add ILoveCandy to Misc section)
+Uncomment Color and multilib (🍬 and add ILoveCandy to Misc section)
 ```
 pacman -Syu
 ```
@@ -513,9 +521,17 @@ pacman -S hplip
 
 ## Graphics Driver
 
-### Open Source drivers:
+### Mesa (required for all GPUs):
 ```
-pacman -S xorg-drivers mesa lib32-mesa
+pacman -S mesa lib32-mesa
+```
+### Vulkan (required for all GPUs):
+```
+pacman -S vulkan-icd-loader lib32-vulkan-icd-loader
+```
+### Open Source drivers (AMD, Intel):
+```
+pacman -S xorg-drivers
 ```
 ### Nvidia proprietary driver:
 ```
@@ -523,7 +539,11 @@ pacman -S nvidia lib32-nvidia-utils
 ```
 ### AMD Utils:
 ```
-pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk
+```
+### Intel Utils:
+```
+pacman -S vulkan-intel
 ```
 
 ## Networking
@@ -767,4 +787,30 @@ sudo nano /etc/fonts/conf.d/90-emoji.conf
 ## Desktop icons for nemo
 ```
 gsettings set org.nemo.desktop show-desktop-icons true
+```
+
+## Backup / Restore
+
+## System
+
+I recommend Timeshift to backup your system. Install it with
+```
+yay -S timeshift cronie
+systemctl enable --now cronie
+```
+For more information please refer to <https://github.com/teejee2008/timeshift>
+
+## Packages / Services List
+
+See <https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#List_of_installed_packages>
+
+### Backup
+```
+yay -Qqe > pkglist.txt
+systemctl list-unit-files --state=enabled > enabled-services.txt
+```
+### Restore
+```
+yay -S --needed - < pkglist.txt
+# Re-enable services with systemctl enable
 ```
