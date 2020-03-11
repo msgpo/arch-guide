@@ -203,7 +203,7 @@ cfdisk /dev/sdX
 
 | Needed | Partition | Partition type       | Mount point   |
 |--------|-----------|----------------------|---------------|
-| ✔️      | /dev/sdXY | EFI system partition | /mnt/boot/EFI |
+| ✔️      | /dev/sdXY | EFI system partition | /mnt/boot/efi |
 | ❌      | /dev/sdXY | Linux swap           | -             |
 | ✔️      | /dev/sdXY | Linux                | /mnt          |
 | ❌      | /dev/sdXY | Linux                | /mnt/home     |
@@ -264,8 +264,8 @@ mount /dev/sdXY /mnt
 
 UEFI:
 ```
-mkdir -p /mnt/boot/EFI
-mount /dev/sdXY /mnt/boot/EFI
+mkdir -p /mnt/boot/efi
+mount /dev/sdXY /mnt/boot/efi
 ```
 
 🏠 If seperate home partiton:
@@ -308,7 +308,7 @@ arch-chroot /mnt
 ▶️ UEFI:
 ```
 pacman -S grub os-prober efibootmgr dosfstools mtools gptfdisk fatresize
-grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot/EFI --recheck
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot/efi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
