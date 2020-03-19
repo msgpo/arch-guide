@@ -83,6 +83,7 @@
     - [Nvidia proprietary driver:](#nvidia-proprietary-driver)
     - [AMD Utils:](#amd-utils)
     - [Intel Utils:](#intel-utils)
+    - [Gaming packages:](#gaming-packages)
   - [Networking](#networking)
     - [If you use WiFi:](#if-you-use-wifi)
   - [Some archive and file system utils](#some-archive-and-file-system-utils)
@@ -97,6 +98,7 @@
   - [Oh My Zsh](#oh-my-zsh)
   - [Oh my Fish](#oh-my-fish)
   - [AUR Setup](#aur-setup)
+  - [Yay Cheat sheet](#yay-cheat-sheet)
   - [If not all user dir's are present](#if-not-all-user-dirs-are-present)
   - [If you want a graphical package manager](#if-you-want-a-graphical-package-manager)
   - [If you use a GTK desktop and want Qt apps to use your GTK Theme](#if-you-use-a-gtk-desktop-and-want-qt-apps-to-use-your-gtk-theme)
@@ -106,7 +108,6 @@
     - [NVIDIA](#nvidia)
   - [Fonts:](#fonts)
     - [General Fonts](#general-fonts)
-    - [Nerd Fonts](#nerd-fonts)
     - [Windows Fonts](#windows-fonts)
     - [macOS Fonts](#macos-fonts)
   - [Nano syntax highlighting](#nano-syntax-highlighting)
@@ -350,7 +351,7 @@ locale-gen
 ```
 🔘 Set locale
 ```
-echo LANG=en_US.UTF-8 >> /etc/locale.conf
+echo LANG=en_US.UTF-8 > /etc/locale.conf
 echo LC_COLLATE=C >> /etc/locale.conf
 export LANG=en_US.UTF-8
 ```
@@ -544,24 +545,29 @@ pacman -S nvidia nvidia-utils lib32-nvidia-utils
 ### AMD Utils:
 Only install these packages if you are using an AMD GPU
 ```
-pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk
+pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk lib32-amdvlk
 ```
 ### Intel Utils:
 Only install this package if you are using an Intel GPU
 ```
 pacman -S vulkan-intel
 ```
+### Gaming packages:
+These packages are useful for gaming
+```
+pacman -S vkd3d lib32-vkd3d faudio lib32-faudio
+```
 
 ## Networking
-🖧 This are essential networking tools
+🖧 Those are essential networking tools
 ```
 pacman -S networkmanager networkmanager-openvpn networkmanager-pptp
 systemctl enable NetworkManager
 ```
 ### If you use WiFi:
-📶 This are essential tools if you connect to the internet via WiFi
+📶 Those are essential tools if you connect to the internet via WiFi
 ```
-pacman -S wireless_tools wpa_supplicant ifplugd
+pacman -S wireless_tools wpa_supplicant ifplugd dialog
 ```
 
 ## Some archive and file system utils
@@ -589,7 +595,7 @@ pacman -S pavucontrol-qt
 ```
 nano /etc/pulse/default.pa
 ```
-Comment out ```# load-module module-role-cork```
+Comment out `# load-module module-role-cork`
 
 ## Other shells
 
@@ -623,7 +629,7 @@ localectl set-x11-keymap de
 ```
 
 ## WiFi
-📶 You may use the ```nmtui``` to configure your network profile
+📶 You can use `nmtui` or `wifi-menu` to configure your network profile
 
 ## Oh My Zsh
 🤖 A delightful & open source framework for Zsh
@@ -638,13 +644,23 @@ curl -L https://get.oh-my.fish | fish
 ```
 
 ## AUR Setup
-The Arch User Repository is a community-driven repository for Arch users. ```yay``` is a pacman wrapper that allows installing AUR packages
+The Arch User Repository is a community-driven repository for Arch users. `yay` is a pacman wrapper that allows installing AUR packages
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -rsi
-cd .. && rm -r yay
+cd .. && rm -rf yay
 ```
+## Yay Cheat sheet
+- `yay` Update system
+- `yay xyz` Install xyz
+- `yay -Rns xyz` Uninstall xyz
+- `yay -Rdd xyz` Force remove xyz (should not be used)
+- `yay -Yc` Uninstall not explicitly installed optional dependencies
+- `yay -Si xyz` Show remote package
+- `yay -Qi xyz` Show local package
+- `yay -Qq` List installed packages
+- `yay -Qqe` List explicitly installed packages
 
 ## If not all user dir's are present
 📁 This will create your default folders (Downloads, Pictures, Documents, etc...)
@@ -689,19 +705,13 @@ yay -S nvidia-settings
 ## Fonts:
 
 ### General Fonts
-🗛 This are some essential font packages
+🗛 Those are some essential font packages
 ```
 yay -S ttf-dejavu ttf-opensans font-mathematica noto-fonts-emoji freetype2 terminus-font ttf-bitstream-vera ttf-dejavu ttf-droid ttf-fira-mono ttf-fira-sans ttf-freefont ttf-inconsolata ttf-liberation ttf-linux-libertine powerline-fonts
 ```
 
-### Nerd Fonts
-🗚 Fonts patched with a high number glyphs (icons) included (You may want this if you use powerline)
-```
-yay -S nerd-fonts-complete
-```
-
 ### Windows Fonts
-🗛 If you need the Windows/Microsoft fonts (f.e. for Office Suites)
+🗛 If you need the Windows/Microsoft fonts (f.e. for Office Suites and required by certain games under Wine)
 ```
 git clone https://aur.archlinux.org/ttf-ms-win10.git
 cd ttf-ms-win10
