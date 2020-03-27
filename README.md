@@ -21,11 +21,12 @@
   - [Important other resources](#important-other-resources)
 - [1. Live Setup](#1-live-setup)
     - [Set keyboard layout](#set-keyboard-layout)
-    - [If WiFi install](#if-wifi-install)
+    - [If you use WiFi to connect to your router](#if-you-use-wifi-to-connect-to-your-router)
     - [Sync time](#sync-time)
     - [Check if booted in BIOS or UEFI](#check-if-booted-in-bios-or-uefi)
-- [2. Partitioning](#2-partitioning)
+- [2. Partitioning + Formatting](#2-partitioning--formatting)
   - [Partitioning](#partitioning)
+    - [List partition table](#list-partition-table)
     - [Start partitioning tool](#start-partitioning-tool)
     - [Create partitions](#create-partitions)
       - [Decide partition table type](#decide-partition-table-type)
@@ -34,8 +35,12 @@
     - [Size recommendations](#size-recommendations)
       - [EFI system](#efi-system)
       - [Swap](#swap)
-  - [Formatting partitions](#formatting-partitions)
-- [3. Mounting accordingly](#3-mounting-accordingly)
+  - [Format partitions](#format-partitions)
+    - [EFI system partition](#efi-system-partition)
+    - [💽 Create root filesystem](#%f0%9f%92%bd-create-root-filesystem)
+    - [🏠 If you use a separate home partition](#%f0%9f%8f%a0-if-you-use-a-separate-home-partition)
+    - [Create Swap](#create-swap)
+- [3. Mount file systems](#3-mount-file-systems)
 - [4. Base installation](#4-base-installation)
   - [Rank the mirrors before for faster downloads](#rank-the-mirrors-before-for-faster-downloads)
   - [Start the installation](#start-the-installation)
@@ -71,6 +76,7 @@
     - [LightDM](#lightdm)
 - [9. Useful packages](#9-useful-packages)
   - [General packages](#general-packages)
+  - [Media Codecs](#media-codecs)
   - [Printer support](#printer-support)
     - [General packages:](#general-packages-1)
     - [GTK Scan Application:](#gtk-scan-application)
@@ -154,11 +160,12 @@ At this point, I assume you're already in the archiso.
 ```
 ls /usr/share/kbd/keymaps/**/*.map.gz
 ```
+Set your keymap (replace KEYMAP with your keymap e.g. de-latin1)
 ```
-loadkeys de-latin1
+loadkeys KEYMAP
 ```
 
-### If WiFi install
+### If you use WiFi to connect to your router
 📶 Use this tool to connect to your network
 ```
 wifi-menu
@@ -174,11 +181,21 @@ timedatectl set-ntp true
 ```
 ls /sys/firmware/efi/efivars
 ```
-If the directory does not exist, the system may be booted in Legacy BIOS Mode
+If the directory does not exist, the system may be booted in Legacy BIOS Mode.
+Most likely you want to do a UEFI install so please double check if your system supports UEFI and you selected the correct entry in the boot menu (In most cases prefixed with UEFI)
 
-# 2. Partitioning
+# 2. Partitioning + Formatting
+
+> In the following X and Y are placeholders for the device and partition number. Replace them with your corresponding device and partition number. "sd" could also be different if you don't connect your hard drive via SCSI/SATA
 
 ## Partitioning
+
+### List partition table
+
+To get an overview you can list your partition table to find out the device you want to use
+```
+fdisk -l
+```
 
 ### Start partitioning tool
 BIOS:
@@ -189,7 +206,7 @@ UEFI:
 ```
 gdisk /dev/sdX
 ```
-Universal + Graphical:
+Universal + Graphical (Recommended for beginners):
 ```
 cfdisk /dev/sdX
 ```
@@ -234,30 +251,30 @@ Taken from <https://docs.voidlinux.org/installation/live-images/partitions.html>
 | 8-64GB     | At least 4GB           | 1.5x the amount of RAM          |
 | 64GB       | At least 4GB           | Hibernation not recommended     |
 
-## Formatting partitions
+## Format partitions
 
-EFI system partition:
+### EFI system partition
 ```
 mkfs.fat -F32 -n EFI /dev/sdXY
 ```
 
-💽 Create root filesystem:
+### 💽 Create root filesystem
 ```
 mkfs.ext4 -L ROOT /dev/sdXY
 ```
 
-🏠 If you use a separate home partition:
+### 🏠 If you use a separate home partition
 ```
 mkfs.ext4 -L HOME /dev/sdXY
 ```
 
-Create Swap:
+### Create Swap
 ```
 mkswap -L SWAP /dev/sdXY
 swapon /dev/sdXY
 ```
 
-# 3. Mounting accordingly
+# 3. Mount file systems
 💽 Mount root filesystem:
 ```
 mount /dev/sdXY /mnt
@@ -294,10 +311,6 @@ pacstrap /mnt base base-devel linux linux-firmware linux-lts sysfsutils usbutils
 Identify by UUID (better):
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
-```
-Identify by Labels:
-```
-genfstab -L /mnt >> /mnt/etc/fstab
 ```
 
 ### Change root
@@ -424,40 +437,52 @@ pacman -S xorg-server xorg-xinit xorg-xrandr xorg-xfontsel xorg-xkill
 ```
 pacman -S lxde
 ```
+See also <https://wiki.archlinux.org/index.php/LXDE>
 ### LXQt:
 ```
 pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5
 ```
+See also <https://wiki.archlinux.org/index.php/LXQt>
 ### GNOME:
 ```
 pacman -S gnome gnome-extra
 ```
+See also <https://wiki.archlinux.org/index.php/GNOME>
 ### Cinnamon:
 ```
 pacman -S cinnamon nemo-fileroller
 ```
 ### KDE Plasma:
 ```
-pacman -S plasma konsole dolphin gwenview ark kate okular
+pacman -S plasma kdialog kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular print-manager
 ```
+If you want to use KDE Connect
+```
+pacman -S kdeconnect sshfs
+```
+See also <https://wiki.archlinux.org/index.php/KDE>
 ### Xfce:
 ```
 pacman -S xfce4 xfce4-goodies
 ```
+See also <https://wiki.archlinux.org/index.php/Xfce>
 ### Budgie:
 ```
 pacman -S budgie-desktop gnome
 ```
+See also <https://wiki.archlinux.org/index.php/Budgie>
 ### Mate:
 ```
 pacman -S mate mate-extra
 ```
+See also <https://wiki.archlinux.org/index.php/MATE>
 ### Deepin:
 ```
 pacman -S deepin deepin-extra
 nano /etc/lightdm/lightdm.conf
 greeter-session=lightdm-deepin-greeter
 ```
+See also <https://wiki.archlinux.org/index.php/Deepin>
 
 ## Display Manager (Desktop Manager)
 🖥️ A display manager is basically your login screen where you enter your user details and select your Desktop Environment
@@ -467,24 +492,28 @@ greeter-session=lightdm-deepin-greeter
 pacman -S lxdm
 systemctl enable lxdm
 ```
+See also <https://wiki.archlinux.org/index.php/LXDM>
 
 ### SDDM (Included in KDE Plasma)
 ```
 pacman -S sddm
 systemctl enable sddm
 ```
+See also <https://wiki.archlinux.org/index.php/SDDM>
 
 ### GDM (Included with GNOME)
 ```
 pacman -S gdm
 systemctl enable gdm
 ```
+See also <https://wiki.archlinux.org/index.php/GDM>
 
 ### LightDM
 ```
 pacman -S lightdm lightdm-gtk-greeter
 systemctl enable lightdm
 ```
+See also <https://wiki.archlinux.org/index.php/LightDM>
 
 # 9. Useful packages
 
@@ -498,6 +527,11 @@ systemctl enable acpid avahi-daemon systemd-timesyncd
 If system is running on a SSD
 ```
 systemctl enable --now fstrim.timer
+```
+
+## Media Codecs
+```
+pacman -S gst-libav gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gstreamer-vaapi gst-transcoder x265 x264 lame
 ```
 
 ## Printer support
