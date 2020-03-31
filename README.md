@@ -106,6 +106,7 @@
   - [AUR Setup](#aur-setup)
   - [Yay Cheat sheet](#yay-cheat-sheet)
   - [If not all user dir's are present](#if-not-all-user-dirs-are-present)
+  - [Firefox for KDE Plasma](#firefox-for-kde-plasma)
   - [If you want a graphical package manager](#if-you-want-a-graphical-package-manager)
   - [If you use a GTK desktop and want Qt apps to use your GTK Theme](#if-you-use-a-gtk-desktop-and-want-qt-apps-to-use-your-gtk-theme)
   - [If you want to read APFS Partitions](#if-you-want-to-read-apfs-partitions)
@@ -122,7 +123,7 @@
   - [Compatibility tweaks](#compatibility-tweaks)
     - [Spotify local files](#spotify-local-files)
   - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-%22failed-to-start-user-manager-service-for-user-174%22-sddm)
-  - [Force Google Emoji](#force-google-emoji)
+  - [Force Color Emoji](#force-color-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
   - [Backup / Restore](#backup--restore)
   - [System](#system)
@@ -703,6 +704,13 @@ yay -S xdg-user-dirs
 xdg-user-dirs-update
 ```
 
+## Firefox for KDE Plasma
+Chromium based browsers make use of kdialog for file dialogs. Firefox does not.
+OpenSUSE created a patched firefox which integrates better into the KDE Plasma Desktop.
+```
+yay -S firefox-kde-opensuse-rpm
+```
+
 ## If you want a graphical package manager
 📦 I recommend only to use ```yay``` to update and install packages but (especially if you are a beginner) you may want a graphical package manager
 - Simple GTK: ```yay -S gnome-packagekit```
@@ -741,7 +749,7 @@ yay -S nvidia-settings
 ### General Fonts
 🗛 Those are some essential font packages
 ```
-yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto-fonts-emoji freetype2 terminus-font ttf-bitstream-vera ttf-dejavu ttf-droid ttf-fira-mono ttf-fira-sans ttf-freefont ttf-inconsolata ttf-liberation ttf-linux-libertine powerline-fonts
+yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto-fonts freetype2 terminus-font ttf-bitstream-vera ttf-dejavu ttf-droid ttf-fira-mono ttf-fira-sans ttf-freefont ttf-inconsolata ttf-liberation ttf-linux-libertine powerline-fonts
 ```
 
 ### Windows Fonts
@@ -792,6 +800,7 @@ Exec = /usr/bin/paccache -rk 2
 🐛 This will fix some bugs and compatibility issues
 ```
 sudo ln -sf /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.5
+yay -S libsndio-61-compat
 ```
 ### Spotify local files
 ```
@@ -806,32 +815,14 @@ yay -S ffmpeg
 sudo chage --expiredate -1 sddm
 ```
 
-## Force Google Emoji
-If the default font includes some emoji characters, they will be used over the characters provided by a dedicated emoji font, resulting in inconsistent display. To override this behavior, the following fontconfig snippet can be added
+## Force Color Emoji
 
-(Source: <https://wiki.archlinux.org/index.php/Fonts#Force_color_emoji>)
 ```
-sudo nano /etc/fonts/conf.d/90-emoji.conf
+yay -S ttf-joypixels
 ```
-```xml
-<fontconfig>
-    <match>
-        <test name="family">
-            <string>sans-serif</string>
-        </test>
-        <edit mode="prepend" name="family" binding="strong">
-            <string>Noto Color Emoji</string>
-        </edit>
-    </match>
-    <match>
-        <test name="family">
-            <string>serif</string>
-        </test>
-        <edit mode="prepend" name="family" binding="strong">
-            <string>Noto Color Emoji</string>
-        </edit>
-    </match>
-</fontconfig>
+If the default font includes some emoji characters, they will be used over the characters provided by a dedicated emoji font, resulting in inconsistent display. Copy the provided config to enforce rendering emojis via JoyPixels
+```
+sudo cp /etc/fonts/conf.avail/75-joypixels.conf /etc/fonts/conf.d
 ```
 
 ## Desktop icons for nemo
