@@ -207,9 +207,13 @@ UEFI:
 ```
 gdisk /dev/sdX
 ```
-Universal + Graphical (Recommended for beginners):
+BIOS Graphical (Recommended for beginners):
 ```
 cfdisk /dev/sdX
+```
+UEFI Graphical (Recommended for beginners):
+```
+cgdisk /dev/sdX
 ```
 
 ### Create partitions
