@@ -37,8 +37,8 @@
       - [Swap](#swap)
   - [Format partitions](#format-partitions)
     - [EFI system partition](#efi-system-partition)
-    - [💽 Create root filesystem](#%f0%9f%92%bd-create-root-filesystem)
-    - [🏠 If you use a separate home partition](#%f0%9f%8f%a0-if-you-use-a-separate-home-partition)
+    - [Create root filesystem](#create-root-filesystem)
+    - [Create home partition filesystem](#create-home-partition-filesystem)
     - [Create Swap](#create-swap)
 - [3. Mount file systems](#3-mount-file-systems)
 - [4. Base installation](#4-base-installation)
@@ -264,12 +264,14 @@ Taken from <https://docs.voidlinux.org/installation/live-images/partitions.html>
 mkfs.fat -F32 -n EFI /dev/sdXY
 ```
 
-### 💽 Create root filesystem
+### Create root filesystem
+💽 This will create the filesystem where the system will be installed on
 ```
 mkfs.ext4 -L ROOT /dev/sdXY
 ```
 
-### 🏠 If you use a separate home partition
+### Create home partition filesystem
+🏠 If you created a separate home partition
 ```
 mkfs.ext4 -L HOME /dev/sdXY
 ```
@@ -292,7 +294,7 @@ mkdir -p /mnt/boot/efi
 mount /dev/sdXY /mnt/boot/efi
 ```
 
-🏠 If seperate home partiton:
+🏠 If you created a separate home partiton:
 ```
 mkdir /mnt/home
 mount /dev/sdXY /mnt/home
