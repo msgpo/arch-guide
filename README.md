@@ -47,7 +47,8 @@
     - [Create filesystem table](#create-filesystem-table)
     - [Change root](#change-root)
 - [5. Install Bootloader](#5-install-bootloader)
-- [6. Setup time/date and languages](#6-setup-timedate-and-languages)
+- [6. Configure system](#6-configure-system)
+  - [The nano text editor](#the-nano-text-editor)
   - [Setup hostname](#setup-hostname)
   - [Setup locale](#setup-locale)
   - [Setup time & date](#setup-time--date)
@@ -60,36 +61,36 @@
 - [8. Install Desktop](#8-install-desktop)
   - [Display Server](#display-server)
   - [Desktop Environment](#desktop-environment)
-    - [LXDE:](#lxde)
-    - [LXQt:](#lxqt)
-    - [GNOME:](#gnome)
-    - [Cinnamon:](#cinnamon)
-    - [KDE Plasma:](#kde-plasma)
-    - [Xfce:](#xfce)
-    - [Budgie:](#budgie)
-    - [Mate:](#mate)
-    - [Deepin:](#deepin)
+    - [KDE Plasma](#kde-plasma)
+    - [Xfce](#xfce)
+    - [GNOME](#gnome)
+    - [LXDE](#lxde)
+    - [LXQt](#lxqt)
+    - [Cinnamon](#cinnamon)
+    - [Budgie](#budgie)
+    - [Mate](#mate)
+    - [Deepin](#deepin)
   - [Display Manager (Desktop Manager)](#display-manager-desktop-manager)
     - [LXDM (Included in LXDE)](#lxdm-included-in-lxde)
     - [SDDM (Included in KDE Plasma)](#sddm-included-in-kde-plasma)
-    - [GDM (Included with GNOME)](#gdm-included-with-gnome)
+    - [GDM (Included with GNOME/Budgie/MATE)](#gdm-included-with-gnomebudgiemate)
     - [LightDM](#lightdm)
 - [9. Useful packages](#9-useful-packages)
   - [General packages](#general-packages)
   - [Media Codecs](#media-codecs)
   - [Printer support](#printer-support)
-    - [General packages:](#general-packages-1)
-    - [GTK Scan Application:](#gtk-scan-application)
-    - [Qt Scan Application:](#qt-scan-application)
-    - [UI for HP Printers:](#ui-for-hp-printers)
+    - [General packages](#general-packages-1)
+    - [Qt Scan Application](#qt-scan-application)
+    - [GTK Scan Application](#gtk-scan-application)
+    - [UI for HP Printers](#ui-for-hp-printers)
   - [Graphics Driver](#graphics-driver)
-    - [Mesa:](#mesa)
-    - [Vulkan:](#vulkan)
-    - [Open Source drivers (AMD, Intel):](#open-source-drivers-amd-intel)
-    - [Nvidia proprietary driver:](#nvidia-proprietary-driver)
-    - [AMD Utils:](#amd-utils)
-    - [Intel Utils:](#intel-utils)
-    - [Gaming packages:](#gaming-packages)
+    - [Mesa](#mesa)
+    - [Vulkan](#vulkan)
+    - [Open Source drivers](#open-source-drivers)
+    - [Nvidia proprietary driver](#nvidia-proprietary-driver)
+    - [AMD Utils](#amd-utils)
+    - [Intel Utils](#intel-utils)
+    - [Gaming packages](#gaming-packages)
   - [Networking](#networking)
     - [If you use WiFi:](#if-you-use-wifi)
   - [Some archive and file system utils](#some-archive-and-file-system-utils)
@@ -113,7 +114,7 @@
   - [Graphics card configuration tool](#graphics-card-configuration-tool)
     - [AMD](#amd)
     - [NVIDIA](#nvidia)
-  - [Fonts:](#fonts)
+  - [Fonts](#fonts)
     - [General Fonts](#general-fonts)
     - [Windows Fonts](#windows-fonts)
     - [macOS Fonts](#macos-fonts)
@@ -161,9 +162,9 @@ At this point, I assume you're already in the archiso.
 ```
 ls /usr/share/kbd/keymaps/**/*.map.gz
 ```
-Set your keymap (replace KEYMAP with your keymap e.g. de-latin1)
+Set your keymap (replace `yourkeymap` with your keymap e.g. de-latin1)
 ```
-loadkeys KEYMAP
+loadkeys yourkeymap
 ```
 
 ### If you use WiFi to connect to your router
@@ -187,7 +188,7 @@ Most likely you want to do a UEFI install so please double check if your system 
 
 # 2. Partitioning + Formatting
 
-> In the following X and Y are placeholders for the device and partition number. Replace them with your corresponding device and partition number. "sd" could also be different if you don't connect your hard drive via SCSI/SATA
+> In the following X and Y are placeholders. Replace them with your corresponding device and partition number. "sd" could also be different if you don't connect your hard drive via SCSI/SATA
 
 ## Partitioning
 
@@ -199,19 +200,19 @@ fdisk -l
 ```
 
 ### Start partitioning tool
-BIOS:
+▶️ BIOS text-based
 ```
 fdisk /dev/sdX
 ```
-UEFI:
+▶️ UEFI text-based
 ```
 gdisk /dev/sdX
 ```
-BIOS Graphical (Recommended for beginners):
+▶️ BIOS Graphical (Recommended for beginners)
 ```
 cfdisk /dev/sdX
 ```
-UEFI Graphical (Recommended for beginners):
+▶️ UEFI Graphical (Recommended for beginners)
 ```
 cgdisk /dev/sdX
 ```
@@ -285,7 +286,7 @@ swapon /dev/sdXY
 mount /dev/sdXY /mnt
 ```
 
-UEFI:
+▶️ UEFI
 ```
 mkdir -p /mnt/boot/efi
 mount /dev/sdXY /mnt/boot/efi
@@ -313,40 +314,42 @@ pacstrap /mnt base base-devel linux linux-firmware linux-lts sysfsutils usbutils
 ```
 
 ### Create filesystem table
-Identify by UUID (better):
+This will create the file system table which contains all the partitions and mountpoints
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### Change root
+After you entered this command you are basically in the installed system
 ```
 arch-chroot /mnt
 ```
 
 # 5. Install Bootloader
-▶️ UEFI:
+▶️ UEFI
 ```
 pacman -S grub os-prober efibootmgr dosfstools mtools gptfdisk fatresize
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot/efi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-▶️ BIOS:
+▶️ BIOS
 ```
 pacman -S grub os-prober
 grub-install --target=i386-pc --recheck /dev/sdX
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-💾 Create initial ramdisk for LTS kernel
-```
-mkinitcpio -p linux-lts
-```
+# 6. Configure system
 
-# 6. Setup time/date and languages
+## The nano text editor
+Nano is the text editor we will use in this tutorial. Basic Usage:
+- Move with arrow keys
+- `CTRL + W` and then `ENTER` to save
+- `CTRL + X` to exit
 
 ## Setup hostname
-📛 This will be the name of your PC on your network
+📛 This will be the name of your PC on your network  (Replace `myhostname`)
 ```
 echo myhostname > /etc/hostname
 nano /etc/hosts
@@ -359,23 +362,22 @@ Add these lines
 ```
 
 ## Setup locale
-🌐 Uncomment all languages you need
+🌐 Uncomment (remove the # in front of) all languages you need
 ```
 nano /etc/locale.gen
 ```
-Generate locales
+🏁 Generate locales
 ```
 locale-gen
 ```
 🔘 Set locale
 ```
 echo LANG=en_US.UTF-8 > /etc/locale.conf
-echo LC_COLLATE=C >> /etc/locale.conf
 export LANG=en_US.UTF-8
 ```
-⌨️ Set tty keymap
+⌨️ Set tty keymap (replace `yourkeymap` with your keymap e.g. de-latin1)
 ```
-echo KEYMAP=de-latin1 > /etc/vconsole.conf
+echo KEYMAP=yourkeymap > /etc/vconsole.conf
 ```
 
 ## Setup time & date
@@ -387,10 +389,16 @@ hwclock --systohc --utc
 ```
 
 ## Setup multilib
+👾 multilib is a repository which contains 32-bit libraries and is disabled by default (needed for gaming)
 ```
 nano /etc/pacman.conf
 ```
-Uncomment Color and multilib (🍬 and add ILoveCandy to Misc section)
+💥 Uncomment (remove the # in front of) the following lines
+```
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+```
+🍬 If you want some extra candy you can also uncomment Color and add ILoveCandy in Misc section. Then run
 ```
 pacman -Syu
 ```
@@ -411,16 +419,20 @@ passwd
 useradd -m -g users -G wheel,audio,video,storage,power,input,optical,sys,log,network,floppy,scanner,rfkill,lp,adm -s /bin/bash yourusername
 passwd yourusername
 ```
-If you want to force your user to change password after first login:
+🎰 If you want to force your user to change password after first login:
 ```
 chage -d 0 yourusername
 ```
 
 ### Enable sudo
+🧐 This will give your user administrative privileges
 ```
 EDITOR=nano visudo
 ```
-Uncomment ```%wheel ALL=(ALL) ALL```
+💥 Uncomment (remove the # in front of) the following lines
+```
+%wheel ALL=(ALL) ALL
+```
 
 # 8. Install Desktop
 
@@ -436,52 +448,53 @@ pacman -S xorg-server xorg-xinit xorg-xrandr xorg-xfontsel xorg-xkill
 
 - For beginners coming from Windows I recommend KDE Plasma.
 - For a very resource friendy desktop I recommend Xfce or LXQt
-- The instructions for KDE Plasma are tested by me because I use it. Others should work but you may need some extra packages for productive use
+- **The instructions for KDE Plasma are tested by me because I use it. Others should work but you may need some extra packages for productive use (pull requests are welcome)**
 
-### LXDE:
+### KDE Plasma
 ```
-pacman -S lxde
+pacman -S plasma kdialog kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular kdf filelight print-manager
 ```
-See also <https://wiki.archlinux.org/index.php/LXDE>
-### LXQt:
-```
-pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5
-```
-See also <https://wiki.archlinux.org/index.php/LXQt>
-### GNOME:
-```
-pacman -S gnome gnome-extra
-```
-See also <https://wiki.archlinux.org/index.php/GNOME>
-### Cinnamon:
-```
-pacman -S cinnamon nemo-fileroller
-```
-### KDE Plasma:
-```
-pacman -S plasma kdialog kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular print-manager
-```
-If you want to use KDE Connect
+If you want to use KDE Connect (Pairing with Android phone)
 ```
 pacman -S kdeconnect sshfs
 ```
 See also <https://wiki.archlinux.org/index.php/KDE>
-### Xfce:
+### Xfce
 ```
 pacman -S xfce4 xfce4-goodies
 ```
 See also <https://wiki.archlinux.org/index.php/Xfce>
-### Budgie:
+### GNOME
 ```
-pacman -S budgie-desktop gnome
+pacman -S gnome gnome-extra
+```
+See also <https://wiki.archlinux.org/index.php/GNOME>
+### LXDE
+```
+pacman -S lxde lxdm-gtk3
+```
+See also <https://wiki.archlinux.org/index.php/LXDE>
+### LXQt
+```
+pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5
+```
+See also <https://wiki.archlinux.org/index.php/LXQt>
+### Cinnamon
+```
+pacman -S cinnamon nemo-fileroller xed 	xreader
+```
+See also <https://wiki.archlinux.org/index.php/Cinnamon>
+### Budgie
+```
+pacman -S budgie-desktop network-manager-applet gnome
 ```
 See also <https://wiki.archlinux.org/index.php/Budgie>
-### Mate:
+### Mate
 ```
-pacman -S mate mate-extra
+pacman -S mate mate-extra gdm
 ```
 See also <https://wiki.archlinux.org/index.php/MATE>
-### Deepin:
+### Deepin
 ```
 pacman -S deepin deepin-extra
 nano /etc/lightdm/lightdm.conf
@@ -494,7 +507,7 @@ See also <https://wiki.archlinux.org/index.php/Deepin>
 
 ### LXDM (Included in LXDE)
 ```
-pacman -S lxdm
+pacman -S lxdm-gtk3
 systemctl enable lxdm
 ```
 See also <https://wiki.archlinux.org/index.php/LXDM>
@@ -506,7 +519,7 @@ systemctl enable sddm
 ```
 See also <https://wiki.archlinux.org/index.php/SDDM>
 
-### GDM (Included with GNOME)
+### GDM (Included with GNOME/Budgie/MATE)
 ```
 pacman -S gdm
 systemctl enable gdm
@@ -541,57 +554,66 @@ pacman -S gst-libav gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugin
 
 ## Printer support
 🖨️ Add some packages needed for printing and scanning
-### General packages:
+### General packages
 ```
 pacman -S system-config-printer foomatic-db foomatic-db-engine gutenprint gsfonts cups cups-pdf cups-filters sane
 systemctl enable org.cups.cupsd.service saned.socket
 ```
-### GTK Scan Application:
-```
-pacman -S simple-scan
-```
-### Qt Scan Application:
+### Qt Scan Application
+Use this if you use KDE Plasma or LXQt
 ```
 pacman -S skanlite
 ```
-### UI for HP Printers:
+### GTK Scan Application
+Use this if you use another desktop environment
+```
+pacman -S simple-scan
+```
+### UI for HP Printers
+🖨 Install this if you have a HP Printer
 ```
 pacman -S hplip
 ```
 
 ## Graphics Driver
 
-### Mesa:
-This is required for all GPUs
+### Mesa
+This is useful for all GPUs
 ```
 pacman -S mesa lib32-mesa
 ```
-### Vulkan:
-This is required for all GPUs
+### Vulkan
+This is useful for all GPUs
 ```
 pacman -S vulkan-icd-loader lib32-vulkan-icd-loader
 ```
-### Open Source drivers (AMD, Intel):
-Only install this group if you use an AMD or Intel GPU or want to use the open source NVIDIA driver (Nouveau)
+### Open Source drivers
+Only install this if you use an AMD or Intel GPU or want to use the open source NVIDIA driver (Nouveau, not developed by NVIDIA)
 ```
 pacman -S xorg-drivers
 ```
-### Nvidia proprietary driver:
+⚠️ You should only select the `xf86-video-` packages for the GPU you want to use.
+- `xf86-video-amdgpu` is for newer AMD GPUs
+- `xf86-video-nouveau` is the open source NVIDIA driver
+- `xf86-video-intel` is for intel GPUs
+- `xf86-video-ati` is for older AMD GPUs
+- If you don't know it you can install all but it could happen that the internal graphics card is used if you install the driver for it
+### Nvidia proprietary driver
 Only install these packages if you are using a NVIDIA GPU
 ```
 pacman -S nvidia nvidia-utils lib32-nvidia-utils
 ```
-### AMD Utils:
+### AMD Utils
 Only install these packages if you are using an AMD GPU
 ```
 pacman -S vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau amdvlk lib32-amdvlk
 ```
-### Intel Utils:
+### Intel Utils
 Only install this package if you are using an Intel GPU
 ```
 pacman -S vulkan-intel
 ```
-### Gaming packages:
+### Gaming packages
 These packages are useful for gaming
 ```
 pacman -S vkd3d lib32-vkd3d faudio lib32-faudio
@@ -600,7 +622,7 @@ pacman -S vkd3d lib32-vkd3d faudio lib32-faudio
 ## Networking
 🖧 Those are essential networking tools
 ```
-pacman -S networkmanager networkmanager-openvpn networkmanager-pptp
+pacman -S networkmanager networkmanager-openvpn networkmanager-pptp networkmanager-vpnc
 systemctl enable NetworkManager
 ```
 ### If you use WiFi:
@@ -619,33 +641,31 @@ pacman -S nfs-utils cifs-utils ntfs-3g exfat-utils
 ## Sound
 🔊 Some essential packages for sound
 ```
-pacman -S alsa-utils pulseaudio-alsa pulseaudio-equalizer pulseaudio-jack
+pacman -S alsa-utils pulseaudio-alsa pulseaudio-equalizer
 ```
-Control app for GTK Desktop:
-```
-pacman -S pavucontrol
-```
-Control app for Qt Desktop:
+Control app for Qt Desktop (KDE Plasma or LXQt)
 ```
 pacman -S pavucontrol-qt
 ```
+Control app for GTK Desktop (another desktop environment)
+```
+pacman -S pavucontrol
+```
 
-🔇 PulseAudio fix notifications sounds muting some media players
+🔇 PulseAudio fix notifications muting some media players
 ```
 nano /etc/pulse/default.pa
 ```
-Comment out `# load-module module-role-cork`
+💥 Comment (add # in front of) `# load-module module-role-cork`
 
 ## Other shells
 
 🐚 You may want to use another shell than bash
-
 ### zsh (Z Shell)
 ```
 pacman -S zsh zsh-completions
 chsh -s /usr/bin/zsh yourusername
 ```
-
 ### fish (Friendly interactive shell)
 ```
 pacman -S fish
@@ -662,9 +682,9 @@ telinit 6
 # 11. Post installation
 
 ## Set X11 Keymap
-⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this
+⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this (replace `yourkeymap` with your keymap e.g. de-latin1)
 ```
-localectl set-x11-keymap de
+localectl set-x11-keymap yourkeymap
 ```
 
 ## WiFi
@@ -742,18 +762,17 @@ yay -S linux-apfs-dkms-git
 yay -S radeon-profile-git radeon-profile-daemon-git
 systemctl enable --now radeon-profile-daemon
 ```
-
 ### NVIDIA
 ```
 yay -S nvidia-settings
 ```
 
-## Fonts:
+## Fonts
 
 ### General Fonts
 🗛 Those are some essential font packages
 ```
-yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto-fonts freetype2 terminus-font ttf-bitstream-vera ttf-dejavu ttf-droid ttf-fira-mono ttf-fira-sans ttf-freefont ttf-inconsolata ttf-liberation ttf-linux-libertine powerline-fonts
+yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto-fonts freetype2 terminus-font ttf-bitstream-vera ttf-dejavu ttf-droid ttf-fira-mono ttf-fira-sans ttf-freefont ttf-inconsolata ttf-liberation ttf-linux-libertine
 ```
 
 ### Windows Fonts
@@ -761,8 +780,8 @@ yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto
 ```
 git clone https://aur.archlinux.org/ttf-ms-win10.git
 cd ttf-ms-win10
-READ PKGBUILD and copy all windows files into the directory and run makepkg -rsi
 ```
+READ PKGBUILD and copy all windows files into the directory and then run `makepkg -rsi`
 
 ### macOS Fonts
 🗚 If you want the San Francisco Font by Apple
@@ -808,10 +827,7 @@ yay -S libsndio-61-compat
 ```
 ### Spotify local files
 ```
-yay -S ffmpeg-compat-57
-```
-```
-yay -S ffmpeg
+yay -S ffmpeg-compat-57 ffmpeg
 ```
 
 ## Fix on shutdown "Failed to start user manager service for user 174" (sddm)
@@ -820,7 +836,6 @@ sudo chage --expiredate -1 sddm
 ```
 
 ## Force Color Emoji
-
 ```
 yay -S ttf-joypixels
 ```
