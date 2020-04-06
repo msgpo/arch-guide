@@ -314,6 +314,10 @@ reflector --country 'United States' --age 15 --protocol https --sort rate --save
 ```
 pacstrap /mnt base base-devel linux linux-firmware linux-lts sysfsutils usbutils e2fsprogs inetutils netctl nano less which man-db man-pages
 ```
+> ⚠️ To ensure system stability append the microcode package for your CPU
+> - `amd-ucode` for AMD CPUs
+> - `intel-ucode` for Intel CPUs 
+> - See <https://wiki.archlinux.org/index.php/Microcode>
 
 ### Create filesystem table
 This will create the file system table which contains all the partitions and mountpoints
