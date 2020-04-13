@@ -847,6 +847,7 @@ yay -S ttf-joypixels
 ```
 If the default font includes some emoji characters, they will be used over the characters provided by a dedicated emoji font, resulting in inconsistent display. Use the following config to enforce rendering emojis via JoyPixels. 
 > ⚠️ Be aware that there is a bug when you do not have the [Windows Fonts](#windows-fonts) installed. See <https://bugs.archlinux.org/task/66080>
+
 ```
 sudo nano /etc/fonts/conf.d/75-joypixels.conf
 ```
