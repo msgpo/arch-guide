@@ -22,6 +22,7 @@
 - [1. Live Setup](#1-live-setup)
     - [Set keyboard layout](#set-keyboard-layout)
     - [If you use WiFi to connect to your router](#if-you-use-wifi-to-connect-to-your-router)
+    - [Check internet connection](#check-internet-connection)
     - [Sync time](#sync-time)
     - [Check if booted in BIOS or UEFI](#check-if-booted-in-bios-or-uefi)
 - [2. Partitioning + Formatting](#2-partitioning--formatting)
@@ -106,7 +107,6 @@
   - [Oh my Fish](#oh-my-fish)
   - [AUR Setup](#aur-setup)
   - [Yay Cheat sheet](#yay-cheat-sheet)
-  - [If not all user dir's are present](#if-not-all-user-dirs-are-present)
   - [Firefox for KDE Plasma](#firefox-for-kde-plasma)
   - [If you want a graphical package manager](#if-you-want-a-graphical-package-manager)
   - [If you use a GTK desktop and want Qt apps to use your GTK Theme](#if-you-use-a-gtk-desktop-and-want-qt-apps-to-use-your-gtk-theme)
@@ -120,6 +120,10 @@
     - [macOS Fonts](#macos-fonts)
   - [Nano syntax highlighting](#nano-syntax-highlighting)
   - [Auto clean package cache](#auto-clean-package-cache)
+  - [Theming](#theming)
+    - [General](#general)
+    - [Plasma & Qt](#plasma--qt)
+    - [GTK & GNOME](#gtk--gnome)
 - [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
   - [Compatibility tweaks](#compatibility-tweaks)
     - [Spotify local files](#spotify-local-files)
@@ -171,6 +175,11 @@ loadkeys yourkeymap
 📶 Use this tool to connect to your network
 ```
 wifi-menu
+```
+
+### Check internet connection
+```
+ping -c 3 archlinux.org
 ```
 
 ### Sync time
@@ -544,7 +553,7 @@ See also <https://wiki.archlinux.org/index.php/LightDM>
 ## General packages
 ```
 pacman -S linux-headers linux-lts-headers dkms
-pacman -S jshon expac git wget acpid avahi net-tools
+pacman -S jshon expac git wget acpid avahi net-tools xdg-user-dirs
 systemctl enable acpid avahi-daemon systemd-timesyncd
 ```
 
@@ -727,13 +736,6 @@ cd .. && rm -rf yay
 - `yay -Qq` List installed packages
 - `yay -Qqe` List explicitly installed packages
 
-## If not all user dir's are present
-📁 This will create your default folders (Downloads, Pictures, Documents, etc...)
-```
-yay -S xdg-user-dirs
-xdg-user-dirs-update
-```
-
 ## Firefox for KDE Plasma
 Chromium based browsers make use of kdialog for file dialogs. Firefox does not.
 OpenSUSE created a patched firefox which integrates better into the KDE Plasma Desktop.
@@ -782,7 +784,7 @@ yay -S adobe-source-sans-pro-fonts ttf-dejavu ttf-opensans font-mathematica noto
 ```
 
 ### Windows Fonts
-🗛 If you need the Windows/Microsoft fonts (f.e. for Office Suites and required by certain games under Wine)
+🗛 If you want the Windows/Microsoft fonts (f.e. for Office Suites and required by certain games under Wine)
 ```
 git clone https://aur.archlinux.org/ttf-ms-win10.git
 cd ttf-ms-win10
@@ -804,7 +806,6 @@ yay -S nano-syntax-highlighting
 ## Auto clean package cache
 🗑️ This will clear the package cache to only keep 1 version after every action
 
-Taken from <https://sourceforge.net/projects/ezos/files/ArchStuff/>
 ```
 sudo mkdir /etc/pacman.d/hooks
 sudo nano /etc/pacman.d/hooks/clean_package_cache.hook
@@ -821,6 +822,56 @@ Target = *
 Description = Cleaning pacman cache...
 When = PostTransaction
 Exec = /usr/bin/paccache -rk 2
+```
+
+## Theming
+
+If you are using KDE Plasma, I do not recommend using the built-in installation methods, as in my experience they're very buggy.
+
+### General
+Icon Theme
+```
+yay -S la-capitaine-icon-theme
+```
+Cursor Theme
+```
+yay -S capitaine-cursors
+```
+
+### Plasma & Qt
+Plasma, Kvantum, SDDM Style
+```
+yay -S kvantum-qt5 mcmojave-kde-theme-git
+```
+Color
+```
+yay -S materia-kde
+```
+Wallpaper
+```
+yay -S dynamic-wallpaper-mojave-kde-git
+```
+Window Decoration
+```
+yay -S sierrabreeze-kwin-decoration-git
+```
+Effects
+```
+yay -S kwin-effects-appear1 kwin-effects-disappear1 kwin-effects-yet-another-magic-lamp kwin-scripts-forceblur
+```
+Latte Dock
+```
+yay -S latte-dock kwin-scripts-window-colors
+```
+
+### GTK & GNOME
+GTK Theme
+```
+yay -S mojave-gtk-theme
+```
+Wallpaper
+```
+yay -S dynamic-wallpaper-mojave-gnome-timed-git
 ```
 
 # 12. Some fixes and tweaks
