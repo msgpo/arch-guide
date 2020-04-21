@@ -53,7 +53,10 @@
   - [Setup hostname](#setup-hostname)
   - [Setup locale](#setup-locale)
   - [Setup time & date](#setup-time--date)
-  - [Setup multilib](#setup-multilib)
+  - [Configure pacman](#configure-pacman)
+    - [Setup multilib](#setup-multilib)
+    - [Extra candy](#extra-candy)
+    - [After configuring](#after-configuring)
 - [7. Setup users](#7-setup-users)
   - [Setup users](#setup-users)
     - [Set root password](#set-root-password)
@@ -166,7 +169,7 @@ At this point, I assume you're already in the archiso.
 ```
 ls /usr/share/kbd/keymaps/**/*.map.gz
 ```
-Set your keymap (replace `yourkeymap` with your keymap e.g. de-latin1)
+Set your keymap (replace `yourkeymap` with your keymap e.g. `de-latin1`)
 ```
 loadkeys yourkeymap
 ```
@@ -390,7 +393,7 @@ locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
 ```
-⌨️ Set tty keymap (replace `yourkeymap` with your keymap e.g. de-latin1)
+⌨️ Set tty keymap (replace `yourkeymap` with your keymap e.g. `de-latin1`)
 ```
 echo KEYMAP=yourkeymap > /etc/vconsole.conf
 ```
@@ -403,17 +406,26 @@ ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc --utc
 ```
 
-## Setup multilib
-👾 multilib is a repository which contains 32-bit libraries and is disabled by default (needed for gaming)
+## Configure pacman
+
+Edit pacman configuration file
 ```
 nano /etc/pacman.conf
 ```
+
+### Setup multilib
+👾 multilib is a repository which contains 32-bit libraries and is disabled by default (needed for some games & software; highly recommended to enable)
+
 💥 Uncomment (remove the # in front of) the following lines
 ```
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 ```
-🍬 If you want some extra candy you can also uncomment Color and add ILoveCandy in Misc section. Then run
+
+### Extra candy
+🍬 If you want some extra candy you can uncomment `Color` and `VerbosePkgLists` and add `ILoveCandy` under `Misc options`.
+
+### After configuring
 ```
 pacman -Syu
 ```
@@ -467,7 +479,7 @@ pacman -S xorg-server xorg-xinit xorg-xrandr xorg-xfontsel xorg-xkill
 
 ### KDE Plasma
 ```
-pacman -S plasma kdialog kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular kdf filelight print-manager
+pacman -S plasma kdialog kcalc konsole dolphin kdegraphics-thumbnailers ffmpegthumbs kdenetwork-filesharing gwenview ark kate okular kcron kdf filelight print-manager
 ```
 If you want to use KDE Connect (Pairing with Android phone)
 ```
@@ -697,7 +709,7 @@ telinit 6
 # 11. Post installation
 
 ## Set X11 Keymap
-⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this (replace `yourkeymap` with your keymap e.g. de-latin1)
+⌨️ It's recommended to set this to your keymap. Some Display Manager and Desktop Environments use this (replace `yourkeymap` with your keymap e.g. `de-latin1`)
 ```
 localectl set-x11-keymap yourkeymap
 ```
@@ -798,7 +810,7 @@ yay -S otf-san-francisco-pro otf-san-francisco-mono
 ```
 
 ## Nano syntax highlighting
-📃 This will add syntax highlighting to the nano text editor
+📃 This package provides syntax highlighting enhancements to the nano text editor
 ```
 yay -S nano-syntax-highlighting
 ```
