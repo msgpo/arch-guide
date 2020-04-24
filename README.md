@@ -861,11 +861,11 @@ yay -S materia-kde
 ```
 Wallpaper
 ```
-yay -S dynamic-wallpaper-mojave-kde-git
+yay -S dynamic-wallpaper-mojave-kde-git dynamic-wallpaper-catalina-kde-git
 ```
 Window Decoration
 ```
-yay -S sierrabreeze-kwin-decoration-git
+yay -S hello-kde-git
 ```
 Effects
 ```
@@ -883,7 +883,7 @@ yay -S mojave-gtk-theme
 ```
 Wallpaper
 ```
-yay -S dynamic-wallpaper-mojave-gnome-timed-git
+yay -S dynamic-wallpaper-mojave-gnome-timed-git dynamic-wallpaper-catalina-gnome-timed-git
 ```
 
 # 12. Some fixes and tweaks
