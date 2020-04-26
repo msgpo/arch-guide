@@ -443,7 +443,7 @@ passwd
 ### Add your user
 🧑 This will be your user you use to log in
 ```
-useradd -m -g users -G wheel,audio,video,storage,power,input,optical,sys,log,network,floppy,scanner,rfkill,lp,adm -s /bin/bash yourusername
+useradd -m -G users,wheel,audio,video,storage,power,input,optical,sys,log,network,floppy,scanner,rfkill,lp,adm -s /bin/bash yourusername
 passwd yourusername
 ```
 🎰 If you want to force your user to change password after first login:
@@ -571,7 +571,7 @@ systemctl enable acpid avahi-daemon systemd-timesyncd
 
 If system is running on a SSD
 ```
-systemctl enable --now fstrim.timer
+systemctl enable fstrim.timer
 ```
 
 ## Media Codecs
