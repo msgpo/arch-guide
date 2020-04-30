@@ -58,10 +58,9 @@
     - [Extra candy](#extra-candy)
     - [After configuring](#after-configuring)
 - [7. Setup users](#7-setup-users)
-  - [Setup users](#setup-users)
-    - [Set root password](#set-root-password)
-    - [Add your user](#add-your-user)
-    - [Enable sudo](#enable-sudo)
+  - [Set root password](#set-root-password)
+  - [Add your user](#add-your-user)
+  - [Enable sudo](#enable-sudo)
 - [8. Install Desktop](#8-install-desktop)
   - [Display Server](#display-server)
   - [Desktop Environment](#desktop-environment)
@@ -432,15 +431,13 @@ pacman -Syu
 
 # 7. Setup users
 
-## Setup users
-
-### Set root password
+## Set root password
 🔑 Use a strong and complicated password
 ```
 passwd
 ```
 
-### Add your user
+## Add your user
 🧑 This will be your user you use to log in. For group reference see <https://wiki.archlinux.org/index.php/Users_and_groups#Group_list>
 ```
 useradd -m -G users,wheel,sys,log,network,rfkill,lp,adm -s /bin/bash yourusername
@@ -451,7 +448,7 @@ passwd yourusername
 chage -d 0 yourusername
 ```
 
-### Enable sudo
+## Enable sudo
 🧐 This will give your user administrative privileges
 ```
 EDITOR=nano visudo
