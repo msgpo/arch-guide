@@ -505,7 +505,7 @@ pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5
 See also <https://wiki.archlinux.org/index.php/LXQt>
 ### Cinnamon
 ```
-pacman -S cinnamon nemo-fileroller xed 	xreader
+pacman -S cinnamon nemo-fileroller xed xreader gnome-terminal
 ```
 See also <https://wiki.archlinux.org/index.php/Cinnamon>
 ### Budgie
