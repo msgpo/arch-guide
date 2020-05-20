@@ -88,6 +88,7 @@
     - [Qt Scan Application](#qt-scan-application)
     - [GTK Scan Application](#gtk-scan-application)
     - [UI for HP Printers](#ui-for-hp-printers)
+  - [Input Driver](#input-driver)
   - [Graphics Driver](#graphics-driver)
     - [Mesa](#mesa)
     - [Vulkan](#vulkan)
@@ -607,6 +608,16 @@ pacman -S simple-scan
 pacman -S hplip
 ```
 
+## Input Driver
+These are some packages needed for certain input devices to properly work. It does no harm to install then, even if you wouldn't need them
+```
+pacman -S xf86-input-synaptics xf86-input-libinput xf86-input-evdev
+```
+When installing inside a virtual machine:
+```
+pacman -S xf86-input-vmmouse
+```
+
 ## Graphics Driver
 
 ### Mesa
@@ -622,15 +633,15 @@ pacman -S vulkan-icd-loader lib32-vulkan-icd-loader
 ### Open Source drivers
 Only install this if you use an AMD or Intel GPU or want to use the open source NVIDIA driver (Nouveau, not developed by NVIDIA)
 ```
-pacman -S xorg-drivers
+pacman -S <driver>
 ```
-⚠️ You should only select the `xf86-video-` packages for the GPU you want to use.
 - `xf86-video-amdgpu` is for newer AMD GPUs
 - `xf86-video-nouveau` is the open source NVIDIA driver
 - `xf86-video-intel` is for intel GPUs
 - `xf86-video-ati` is for older AMD GPUs
+- `xf86-video-vmware` for VirtualBox, VMWare, QEMU
+- `xf86-video-fbdev` for Hyper-V
 - If you don't know it you can install all but it could happen that the internal graphics card is used if you install the driver for it
-- You can also include `xf86-input-synaptics`, `xf86-input-libinput` and `xf86-input-evdev` which are needed for certain input devices to work. It does not hurt if you install it, even if you wouldn't need it
 
 ### Nvidia proprietary driver
 Only install these packages if you are using a NVIDIA GPU
