@@ -33,6 +33,7 @@
       - [Decide partition table type](#decide-partition-table-type)
       - [GPT (UEFI)](#gpt-uefi)
       - [DOS (BIOS)](#dos-bios)
+      - [GPT (BIOS)](#gpt-bios)
     - [Size recommendations](#size-recommendations)
       - [EFI system](#efi-system)
       - [Swap](#swap)
@@ -61,6 +62,7 @@
   - [Set root password](#set-root-password)
   - [Add your user](#add-your-user)
   - [Enable sudo](#enable-sudo)
+- [My Script to install the rest](#my-script-to-install-the-rest)
 - [8. Install Desktop](#8-install-desktop)
   - [Display Server](#display-server)
   - [Desktop Environment](#desktop-environment)
@@ -211,19 +213,19 @@ fdisk -l
 ```
 
 ### Start partitioning tool
-▶️ BIOS text-based
+▶️ Text-based
 ```
 fdisk /dev/sdX
 ```
-▶️ UEFI text-based
+▶️ UEFI only text-based
 ```
 gdisk /dev/sdX
 ```
-▶️ BIOS Graphical (Recommended for beginners)
+▶️ Graphical (Recommended for beginners)
 ```
 cfdisk /dev/sdX
 ```
-▶️ UEFI Graphical (Recommended for beginners)
+▶️ UEFI only Graphical (Recommended for beginners)
 ```
 cgdisk /dev/sdX
 ```
@@ -250,6 +252,9 @@ cgdisk /dev/sdX
 | ❌      | /dev/sdXY | Linux swap     | -           | -        |
 | ✔️      | /dev/sdXY | Linux          | /mnt        | Bootable |
 | ❌      | /dev/sdXY | Linux          | /mnt/home   | -        |
+
+#### GPT (BIOS)
+
 
 ### Size recommendations
 
@@ -458,6 +463,9 @@ EDITOR=nano visudo
 %wheel ALL=(ALL) ALL
 ```
 
+# My Script to install the rest
+TODO!!!
+
 # 8. Install Desktop
 
 ## Display Server
@@ -622,6 +630,8 @@ pacman -S xorg-drivers
 - `xf86-video-intel` is for intel GPUs
 - `xf86-video-ati` is for older AMD GPUs
 - If you don't know it you can install all but it could happen that the internal graphics card is used if you install the driver for it
+- You can also include `xf86-input-synaptics`, `xf86-input-libinput` and `xf86-input-evdev` which are needed for certain input devices to work. It does not hurt if you install it, even if you wouldn't need it
+
 ### Nvidia proprietary driver
 Only install these packages if you are using a NVIDIA GPU
 ```
