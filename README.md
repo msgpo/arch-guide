@@ -132,7 +132,7 @@
 - [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
   - [Compatibility tweaks](#compatibility-tweaks)
     - [Spotify local files](#spotify-local-files)
-  - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-%22failed-to-start-user-manager-service-for-user-174%22-sddm)
+  - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-failed-to-start-user-manager-service-for-user-174-sddm)
   - [Force Color Emoji](#force-color-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
   - [Backup / Restore](#backup--restore)
@@ -514,7 +514,7 @@ pacman -S lxqt breeze-icons pcmanfm-qt qterminal lxqt-sudo polkit-qt5
 See also <https://wiki.archlinux.org/index.php/LXQt>
 ### Cinnamon
 ```
-pacman -S cinnamon nemo-fileroller xed xreader gnome-terminal
+pacman -S cinnamon cinnamon-translations nemo-fileroller nemo-image-converter nemo-preview xed xreader gnome-terminal metacity gnome-shell gnome-themes-extra
 ```
 See also <https://wiki.archlinux.org/index.php/Cinnamon>
 ### Budgie
