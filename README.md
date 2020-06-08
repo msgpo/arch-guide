@@ -88,6 +88,7 @@
     - [Qt Scan Application](#qt-scan-application)
     - [GTK Scan Application](#gtk-scan-application)
     - [UI for HP Printers](#ui-for-hp-printers)
+  - [Bluetooth support](#bluetooth-support)
   - [Input Driver](#input-driver)
   - [Graphics Driver](#graphics-driver)
     - [Mesa](#mesa)
@@ -606,6 +607,13 @@ pacman -S simple-scan
 🖨 Install this if you have a HP Printer
 ```
 pacman -S hplip
+```
+
+## Bluetooth support
+🔵 Add some packages needed for proper bluetooth support
+```
+pacman -S bluez bluez-utils
+systemctl enable bluetooth
 ```
 
 ## Input Driver
