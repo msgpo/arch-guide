@@ -654,7 +654,7 @@ pacman -S <driver>
 ### Nvidia proprietary driver
 Only install these packages if you are using a NVIDIA GPU
 ```
-pacman -S nvidia nvidia-utils lib32-nvidia-utils
+pacman -S nvidia nvidia-lts nvidia-utils lib32-nvidia-utils
 ```
 ### AMD Utils
 Only install these packages if you are using an AMD GPU
