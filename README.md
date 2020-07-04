@@ -62,7 +62,6 @@
   - [Set root password](#set-root-password)
   - [Add your user](#add-your-user)
   - [Enable sudo](#enable-sudo)
-- [My Script to install the rest](#my-script-to-install-the-rest)
 - [8. Install Desktop](#8-install-desktop)
   - [Display Server](#display-server)
   - [Desktop Environment](#desktop-environment)
@@ -464,9 +463,6 @@ EDITOR=nano visudo
 ```
 %wheel ALL=(ALL) ALL
 ```
-
-# My Script to install the rest
-TODO!!!
 
 # 8. Install Desktop
 
