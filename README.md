@@ -178,6 +178,19 @@ loadkeys yourkeymap
 
 ### If you use WiFi to connect to your router
 📶 Use this tool to connect to your network
+
+After July 2020:
+```bash
+iwctl
+device list
+# your device name might be different (replace wlan0)
+station wlan0 scan
+station wlan0 get-networks
+# replace <SSID> with your network name from the previous command
+station wlan0 connect <SSID>
+```
+
+Before July 2020:
 ```
 wifi-menu
 ```
