@@ -130,13 +130,18 @@
     - [Plasma & Qt](#plasma--qt)
     - [GTK & GNOME](#gtk--gnome)
 - [12. Some fixes and tweaks](#12-some-fixes-and-tweaks)
+  - [Performance tweaks](#performance-tweaks)
+    - [Decrease swappiness](#decrease-swappiness)
+    - [Install OOM killer](#install-oom-killer)
   - [Compatibility tweaks](#compatibility-tweaks)
+    - [Citra Emulator](#citra-emulator)
     - [Spotify local files](#spotify-local-files)
   - [Fix on shutdown "Failed to start user manager service for user 174" (sddm)](#fix-on-shutdown-failed-to-start-user-manager-service-for-user-174-sddm)
   - [Force Color Emoji](#force-color-emoji)
   - [Desktop icons for nemo](#desktop-icons-for-nemo)
   - [Backup / Restore](#backup--restore)
   - [System](#system)
+  - [Personal files](#personal-files)
   - [Packages / Services List](#packages--services-list)
     - [Backup](#backup)
     - [Restore](#restore)
@@ -923,8 +928,27 @@ yay -S dynamic-wallpaper-mojave-gnome-timed-git dynamic-wallpaper-catalina-gnome
 
 # 12. Some fixes and tweaks
 
+## Performance tweaks
+
+### Decrease swappiness
+You may want to decrease the swappiness if you have enough RAM so the system only uses swap when it absolutely has to
+```
+sudo nano /etc/sysctl.d/99-swappiness.conf
+```
+```
+vm.swappiness=10
+```
+
+### Install OOM killer
+An Out Of Memory (OOM) killer terminates applications when you would otherwise run out of memory. ⚠ This may lead to data loss.
+```
+yay -S earlyoom
+```
+
+
 ## Compatibility tweaks
 🐛 This will fix some bugs and compatibility issues
+### Citra Emulator
 ```
 sudo ln -sf /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.5
 yay -S libsndio-61-compat
@@ -1145,6 +1169,14 @@ yay -S timeshift cronie
 systemctl enable --now cronie
 ```
 For more information please refer to <https://github.com/teejee2008/timeshift>
+
+## Personal files
+
+I recommend Déjà Dup to backup your personal files. Install it with
+```
+yay -S deja-dup
+```
+You may want to exclude certain folders (like Nextcloud or other cloud services, Games, .cache, .config and .local/share if you don't want to backup your program config files)
 
 ## Packages / Services List
 
