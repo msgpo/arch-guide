@@ -883,7 +883,7 @@ If you are using KDE Plasma, I do not recommend using the built-in installation 
 ### General
 Icon Theme
 ```
-yay -S la-capitaine-icon-theme
+yay -S la-capitaine-icon-theme korla-icon-theme
 ```
 Cursor Theme
 ```
@@ -893,7 +893,7 @@ yay -S capitaine-cursors
 ### Plasma & Qt
 Plasma, Kvantum, SDDM Style
 ```
-yay -S kvantum-qt5 mcmojave-kde-theme-git
+yay -S kvantum-qt5 whitesur-kde-theme-git
 ```
 Color
 ```
